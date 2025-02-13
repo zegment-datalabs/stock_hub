@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'dart:async';
 import 'package:shared_preferences/shared_preferences.dart';  // To access SharedPreferences
 import '../actions/user_service.dart';  // Import the user service to fetch the username
-import 'signup_page.dart';
+//import 'signup_page.dart';
+import 'homepage.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -37,11 +38,20 @@ class _SplashScreenState extends State<SplashScreen>
 
     _loadUser();
 
-    // Navigate to Sign Up Page after 3 seconds
+  //   // Navigate to Sign Up Page after 3 seconds
+  //   Timer(const Duration(seconds: 3), () {
+  //     Navigator.pushReplacement(
+  //       context,
+  //       MaterialPageRoute(builder: (context) => const SignUpPage()),  // You can change this to HomePage or Dashboard if needed
+  //     );
+  //   });
+  // }
+
+   // Navigate to Sign Up Page after 3 seconds
     Timer(const Duration(seconds: 3), () {
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => const SignUpPage()),  // You can change this to HomePage or Dashboard if needed
+        MaterialPageRoute(builder: (context) => const HomePage()),  // You can change this to HomePage or Dashboard if needed
       );
     });
   }
@@ -128,7 +138,7 @@ class _SplashScreenState extends State<SplashScreen>
                           ),
                         ),
                         child: const Icon(
-                          Icons.fire_truck,
+                          Icons.local_shipping,
                           size: 90.0,
                           color: Color.fromARGB(255, 19, 2, 2),
                         ),

@@ -1,7 +1,32 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:stock_hub/screens/login_page.dart';
+import 'package:flutter/material.dart';
 
+
+
+class AuthService {
+  // Logout function to clear user session
+  Future<void> logout(BuildContext context) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.clear();
+
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(builder: (context) => const LoginPage()),
+    );
+  }
+  // Function to load user data from SharedPreferences
+  Future<Map<String, String?>> loadUserData() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    return {
+      "email": prefs.getString('emailOrPhone') ?? 'Guest',
+      "profilePicUrl": prefs.getString('profilePicPath') ?? "",
+      "name": prefs.getString('name') ?? 'Guest',
+    };
+  }
+}
 
 Future<String?> resetPassword(String email) async {
   try {
