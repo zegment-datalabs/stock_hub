@@ -1,0 +1,124 @@
+{
+  "project_info": {
+    "project_number": "726899299724",
+    "project_id": "zegmentdata",
+    "storage_bucket": "zegmentdata.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:726899299724:android:ddbb44919a89e9dc04f2a9",
+        "android_client_info": {
+          "package_name": "com.example.chat_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDAsXGyuoU1gmzF-ngAUDkCMIzi8vzfZeQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:726899299724:android:118a74ad8b27ded704f2a9",
+        "android_client_info": {
+          "package_name": "com.example.data1"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDAsXGyuoU1gmzF-ngAUDkCMIzi8vzfZeQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:726899299724:android:10f1b0cf860dfb3b04f2a9",
+        "android_client_info": {
+          "package_name": "com.example.dataadd"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDAsXGyuoU1gmzF-ngAUDkCMIzi8vzfZeQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:726899299724:android:24d3653232a0955104f2a9",
+        "android_client_info": {
+          "package_name": "com.example.stock_hub"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDAsXGyuoU1gmzF-ngAUDkCMIzi8vzfZeQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:726899299724:android:5fa723745952068104f2a9",
+        "android_client_info": {
+          "package_name": "com.example.van_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDAsXGyuoU1gmzF-ngAUDkCMIzi8vzfZeQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:726899299724:android:21cb49cd83967f4c04f2a9",
+        "android_client_info": {
+          "package_name": "com.example.van_app_demo"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDAsXGyuoU1gmzF-ngAUDkCMIzi8vzfZeQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
