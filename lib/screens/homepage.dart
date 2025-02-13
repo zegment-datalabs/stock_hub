@@ -1,7 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'login_page.dart';
+import 'package:stock_hub/screens/pages/products.dart';
+import 'package:stock_hub/screens/pages/van.dart';
+import 'package:stock_hub/screens/pages/routes.dart';
+import 'package:stock_hub/screens/pages/salesman.dart';
+import 'package:stock_hub/screens/pages/supplier.dart';
+import 'package:stock_hub/screens/pages/category.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -165,67 +170,6 @@ class _HomePageState extends State<HomePage> {
           ],
         ),
       ),
-    );
-  }
-}
-
-// Example Pages for navigation
-class CategoryPage extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: Text('Category Page')),
-      body: Center(child: Text('Category Page Content')),
-    );
-  }
-}
-
-class ProductsPage extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: Text('Products Page')),
-      body: Center(child: Text('Products Page Content')),
-    );
-  }
-}
-
-class VanPage extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: Text('Van Page')),
-      body: Center(child: Text('Van Page Content')),
-    );
-  }
-}
-
-class SupplierPage extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: Text('Supplier Page')),
-      body: Center(child: Text('Supplier Page Content')),
-    );
-  }
-}
-
-class RoutesPage extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: Text('Routes Page')),
-      body: Center(child: Text('Routes Page Content')),
-    );
-  }
-}
-
-class SalesmanPage extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: Text('Salesman Page')),
-      body: Center(child: Text('Salesman Page Content')),
     );
   }
 }
