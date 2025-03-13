@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:stock_hub/actions/authentication_actions.dart'; // Assuming you have this file
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+
 
 class ForgotPasswordPage extends StatefulWidget {
   const ForgotPasswordPage({super.key});
@@ -14,6 +15,15 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
   final _formKey = GlobalKey<FormState>();
   bool _isLoading = false;
   String? _emailError;
+  
+  Future<String?> resetPassword(String email) async {
+  try {
+    await FirebaseAuth.instance.sendPasswordResetEmail(email: email);
+    return null; // Successful reset
+  } catch (e) {
+    return e.toString(); // Return error message
+  }
+}
 
   void _resetPassword() async {
     setState(() {
@@ -46,6 +56,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Forgot Password'),
+         backgroundColor: Colors.indigo,
       ),
       body: Padding(
         padding: const EdgeInsets.all(20.0),

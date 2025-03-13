@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'dart:async';
 import 'package:shared_preferences/shared_preferences.dart';  // To access SharedPreferences
 import '../actions/user_service.dart';  // Import the user service to fetch the username
-//import 'signup_page.dart';
+import 'signup_page.dart';
 import 'homepage.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -79,7 +79,7 @@ class _SplashScreenState extends State<SplashScreen>
       body: Container(
         decoration: const BoxDecoration(
           gradient: LinearGradient(
-            colors: [Color.fromARGB(255, 185, 92, 15), Color.fromARGB(255, 173, 139, 25)],
+            colors: [Color.fromARGB(255, 7, 76, 133), Color.fromRGBO(159, 131, 235, 1)],
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
           ),

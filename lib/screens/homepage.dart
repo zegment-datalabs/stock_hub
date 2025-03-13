@@ -1,12 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:stock_hub/screens/pages/Assignroute_and_name.dart.dart';
 import 'package:stock_hub/screens/pages/products.dart';
 import 'package:stock_hub/screens/pages/van.dart';
 import 'package:stock_hub/screens/pages/routes.dart';
 import 'package:stock_hub/screens/pages/salesman.dart';
 import 'package:stock_hub/screens/pages/supplier.dart';
 import 'package:stock_hub/screens/pages/category.dart';
+import 'package:stock_hub/screens/stock_allocation.dart';
+import 'package:stock_hub/screens/pages/salesman_to_van.dart';
+import 'package:stock_hub/screens/pages/route_to_van.dart';
+import 'package:stock_hub/screens/pages/add_stock.dart';
+import 'package:stock_hub/screens/pages/order_to_van.dart';
+
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -36,10 +43,10 @@ class _HomePageState extends State<HomePage> {
     setState(() {
       userEmail = prefs.getString('emailOrPhone') ?? 'Guest';
       _profilePicUrl = prefs.getString('profilePicPath') ?? "";
-      userName = prefs.getString('name') ?? 'Guest';
+      userName = prefs.getString('username') ?? 'Guest';
     });
 
-    print("✅ Loaded Username: userName");
+    print("✅ Loaded Username: $userName");
     print("✅ Loaded Profile Pic URL: $_profilePicUrl");
   }
 
@@ -57,92 +64,57 @@ class _HomePageState extends State<HomePage> {
         break;
     }
   }
-
-  @override
+@override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Home')),
-      body: Column(
-        children: [
+      appBar: AppBar(
+        title: const Text('Home', style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
+        backgroundColor: Colors.indigo,
+          centerTitle: true,
+        actions: [
           Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Column(
-              children: [
-                CircleAvatar(
-                  radius: 50,
-                  backgroundImage: _profilePicUrl.isNotEmpty
-                      ? NetworkImage(_profilePicUrl)
-                      : null, // No icon if URL is available
-                  backgroundColor: Colors.grey.shade400, // No image if URL is empty
-                  child: _profilePicUrl.isEmpty
-                      ? const Icon(Icons.person, size: 50, color: Colors.white) // Placeholder icon
-                      : null, // Background color for the icon
-                ),
-                const SizedBox(height: 10),
-                Text("Welcome, ${userName ?? 'loading'}!", style: const TextStyle(fontSize: 24)),
-                const SizedBox(height: 20),
-                GridView.count(
-                  crossAxisCount: 3, // 3 columns
-                  shrinkWrap: true,
-                  physics: const NeverScrollableScrollPhysics(),
-                  crossAxisSpacing: 10,
-                  mainAxisSpacing: 10,
-                  padding: const EdgeInsets.all(16),
-                  children: [
-                    CircularButton(Icons.category, 'Category', Colors.blue, () {
-                      // Navigate to Category page
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => CategoryPage()),
-                      );
-                    }),
-                    CircularButton(Icons.add_shopping_cart, 'Products', Colors.green, () {
-                      // Navigate to Products page
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => ProductsPage()),
-                      );
-                    }),
-                    CircularButton(Icons.local_shipping, 'Van', Colors.orange, () {
-                      // Navigate to Van page
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => VanPage()),
-                      );
-                    }),
-                    CircularButton(Icons.local_taxi, 'Supplier', Colors.red, () {
-                      // Navigate to Supplier page
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => SupplierPage()),
-                      );
-                    }),
-                    CircularButton(Icons.directions, 'Routes', Colors.purple, () {
-                      // Navigate to Routes page
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => RoutesPage()),
-                      );
-                    }),
-                    CircularButton(Icons.person, 'Salesman', Colors.cyan, () {
-                      // Navigate to Salesman page
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => SalesmanPage()),
-                      );
-                    }),
-                  ],
-                ),
-              ],
+            padding: const EdgeInsets.only(right: 10.0),
+            child: CircleAvatar(
+              radius: 22,
+              backgroundImage: _profilePicUrl.isNotEmpty ? NetworkImage(_profilePicUrl) : null,
+              backgroundColor: Colors.grey.shade400,
+              child: _profilePicUrl.isEmpty
+                  ? const Icon(Icons.person, size: 28, color: Colors.white)
+                  : null,
             ),
           ),
         ],
       ),
+
+      body: Padding(
+        padding: const EdgeInsets.all(20.0),
+        child: GridView.count(
+          shrinkWrap: true,
+          physics: const NeverScrollableScrollPhysics(),
+          crossAxisCount: 3,
+          crossAxisSpacing: 20,
+          mainAxisSpacing: 20,
+          children: [
+            _buildNavItem(Icons.category_outlined, 'Category', const CategoryPage()),
+            _buildNavItem(Icons.add_shopping_cart, 'Products', const ProductsPage()),
+            _buildNavItem(Icons.inventory_2_outlined, 'Stock', StockAllocationPage()),
+            _buildNavItem(Icons.warehouse, 'Add Stock', AddStockPage()),
+            _buildNavItem(Icons.receipt_long_outlined, 'Order to Van', OrderToVanPage()),
+            _buildNavItem(Icons.person_outline, 'Salesman', const SalesmanPage()),
+            _buildNavItem(Icons.route_outlined,'Van and Route', const CustomerPage()),
+            _buildNavItem(Icons.local_shipping_outlined, 'Van', const VanPage()),
+            _buildNavItem(Icons.local_taxi_outlined, 'Supplier', const SupplierPage()),
+            _buildNavItem(Icons.map_outlined, 'Routes', const RoutesPage()),
+          ],
+        ),
+      ),
+
       bottomNavigationBar: BottomNavigationBar(
-        currentIndex: _selectedIndex,
-        onTap: _onItemTapped,
-        selectedItemColor: Colors.black,
-        unselectedItemColor: const Color.fromARGB(255, 0, 0, 0),
+        currentIndex: 0,
+        selectedItemColor: Colors.indigo,
+        unselectedItemColor: Colors.grey,
+        backgroundColor: Colors.white,
+        elevation: 10,
         type: BottomNavigationBarType.fixed,
         items: const [
           BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
@@ -152,24 +124,49 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  Widget CircularButton(IconData icon, String label, Color color, VoidCallback onTap) {
+  Widget _buildNavItem(IconData icon, String label, Widget targetPage) {
     return InkWell(
-      onTap: onTap,
+      onTap: () {
+        Navigator.push(context, MaterialPageRoute(builder: (context) => targetPage));
+      },
       child: Container(
         decoration: BoxDecoration(
-          color: color.withOpacity(0.1),
-          shape: BoxShape.circle,
-          border: Border.all(color: color, width: 2),
+          color: Colors.indigo.withOpacity(0.15),
+          borderRadius: BorderRadius.circular(15),
+          border: Border.all(color: Colors.indigo, width: 2),
         ),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(icon, color: color, size: 40),
-            const SizedBox(height: 10),
-            Text(label, style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: color)),
+            Icon(icon, color: Colors.indigo, size: 30),
+            const SizedBox(height: 8),
+            Text(label, style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w500)),
           ],
         ),
       ),
     );
   }
 }
+// Animated Gradient Background Widget
+// class AnimatedBackground extends StatefulWidget {
+//   @override
+//   _AnimatedBackgroundState createState() => _AnimatedBackgroundState();
+// }
+
+// class _AnimatedBackgroundState extends State<AnimatedBackground> {
+//   @override
+//   Widget build(BuildContext context) {
+//     return AnimatedContainer(
+//       duration: const Duration(seconds: 10),
+//       decoration: BoxDecoration(
+//         gradient: LinearGradient(
+//           begin: Alignment.topLeft,
+//           end: Alignment.bottomRight,
+//           colors: [Colors.purple.shade600, Colors.blue.shade600, Colors.green.shade600],
+//           stops: [0.0, 0.5, 1.0],
+//         ),
+//       ),
+//       child: Container(),
+//     );
+ // }
+//}
