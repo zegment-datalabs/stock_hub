@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
-import 'package:stock_hub/screens/pages/common_widgets.dart';
+import 'package:stock_hub/widgets/common_widgets.dart';
 import 'package:stock_hub/screens/myaccount.dart'; 
 import 'package:stock_hub/screens/homepage.dart';
 import 'package:stock_hub/screens/pages/customer.dart';

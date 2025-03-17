@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:stock_hub/screens/pages/common_widgets.dart';
+import 'package:stock_hub/widgets/common_widgets.dart';
 
 
 class StockAllocationPage extends StatefulWidget {

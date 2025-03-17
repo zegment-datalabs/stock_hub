@@ -13,7 +13,7 @@ import 'package:stock_hub/screens/stock_allocation.dart';
 import 'package:stock_hub/screens/pages/add_stock.dart';
 import 'package:stock_hub/screens/pages/order_to_van.dart';
 import 'package:stock_hub/screens/myaccount.dart';
-import 'package:stock_hub/screens/pages/common_widgets.dart';
+import 'package:stock_hub/widgets/common_widgets.dart';
 
 
 class HomePage extends StatefulWidget {

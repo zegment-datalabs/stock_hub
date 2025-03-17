@@ -7,7 +7,7 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:stock_hub/screens/homepage.dart';
 import 'package:stock_hub/screens/pages/stock_summary.dart';
 import 'package:stock_hub/screens/pages/van.dart';
-import 'package:stock_hub/screens/pages/common_widgets.dart';
+import 'package:stock_hub/widgets/common_widgets.dart';
 import 'package:stock_hub/screens/pages/customer.dart';
 import 'package:stock_hub/screens/myaccount.dart';
 

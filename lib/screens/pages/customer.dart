@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:stock_hub/screens/pages/common_widgets.dart';
+import 'package:stock_hub/widgets/common_widgets.dart';
 
 
 final FirebaseFirestore _firestore = FirebaseFirestore.instance;
