@@ -1,5 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:stock_hub/screens/pages/common_widgets.dart';
+
 
 class OrderToVanPage extends StatefulWidget {
   @override
@@ -712,6 +714,7 @@ class OrderToVanPageState extends State<OrderToVanPage> {
                  Row(
                 children: [
                   Expanded(
+                     
                     child: Align(
                       alignment: Alignment.centerLeft,
                       child: ElevatedButton(
@@ -879,8 +882,10 @@ class OrderToVanPageState extends State<OrderToVanPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Order to Van',style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
-      backgroundColor: Colors.indigo,
+      appBar: AppBar(title: const Text('Order to Van',
+      style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold,color: Colors.white)),
+        backgroundColor: Colors.indigo,
+       iconTheme: const IconThemeData(color: Colors.white),
       centerTitle: true),
       body: Padding(
         padding: const EdgeInsets.all(16.0),

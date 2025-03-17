@@ -197,9 +197,9 @@ class _RoutesPageState extends State<RoutesPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Routes', style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold,)
+      appBar: AppBar(title: const Text('Routes', style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold,color: Colors.white)
       ),  backgroundColor: Colors.indigo,
-        iconTheme: const IconThemeData(color: Colors.black),
+       iconTheme: const IconThemeData(color: Colors.white),
           centerTitle: true
           ),
     

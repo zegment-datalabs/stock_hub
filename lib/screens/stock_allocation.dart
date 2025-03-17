@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:stock_hub/screens/pages/common_widgets.dart';
+
 
 class StockAllocationPage extends StatefulWidget {
   @override
@@ -179,10 +181,11 @@ class _StockAllocationPageState extends State<StockAllocationPage>
   }
 
   @override
-  Widget build(BuildContext context) {
+   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text("Stock Allocation", style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),),
-       backgroundColor: Colors.indigo,centerTitle: true),
+      appBar: buildAppBar('Stock Allocation'),
+      endDrawer: buildEndDrawer(context),
+       
        body: Column(children: [
         // Van Selection
         Padding(
@@ -283,7 +286,7 @@ class _StockAllocationPageState extends State<StockAllocationPage>
                     if (selectedCategory != null)
                       // Search Bar
                       Padding(
-                    padding: const EdgeInsets.all(8.0),
+                    padding: const EdgeInsets.all(12.0),
                     child: TextField(
                       controller: searchController,
                       decoration: InputDecoration(
@@ -300,7 +303,8 @@ class _StockAllocationPageState extends State<StockAllocationPage>
                                             },
                                           )
                                         : null,
-                                    border: OutlineInputBorder(borderRadius: BorderRadius.circular(8)),
+                                        contentPadding: const EdgeInsets.symmetric(vertical: 5.0, horizontal: 12.0), // Reduced height
+                                    border: OutlineInputBorder(borderRadius: BorderRadius.circular(30)),
                                   ),
                                   onChanged: (value) {
                                     setState(() {

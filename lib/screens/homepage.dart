@@ -1,18 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:stock_hub/screens/pages/Assignroute_and_name.dart.dart';
+import 'package:stock_hub/screens/pages/customer.dart';
 import 'package:stock_hub/screens/pages/products.dart';
+import 'package:stock_hub/screens/pages/stock_summary.dart';
 import 'package:stock_hub/screens/pages/van.dart';
 import 'package:stock_hub/screens/pages/routes.dart';
 import 'package:stock_hub/screens/pages/salesman.dart';
 import 'package:stock_hub/screens/pages/supplier.dart';
 import 'package:stock_hub/screens/pages/category.dart';
 import 'package:stock_hub/screens/stock_allocation.dart';
-import 'package:stock_hub/screens/pages/salesman_to_van.dart';
-import 'package:stock_hub/screens/pages/route_to_van.dart';
 import 'package:stock_hub/screens/pages/add_stock.dart';
 import 'package:stock_hub/screens/pages/order_to_van.dart';
+import 'package:stock_hub/screens/myaccount.dart';
+import 'package:stock_hub/screens/pages/common_widgets.dart';
 
 
 class HomePage extends StatefulWidget {
@@ -62,21 +63,50 @@ class _HomePageState extends State<HomePage> {
           MaterialPageRoute(builder: (context) => const HomePage()),
         );
         break;
+        case 1:
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => const CustomerPage ()),
+        );
+        break;
+         case 2:
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => const VanPage ()),
+        );
+        break;
+         case 3:
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) =>  StockSummaryPage()),
+        );
+        break;
+      case 4:
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => const MyAccountPage()),
+        );
+        break;
     }
   }
-@override
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Home', style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
+        title: const Text('Home',
+            style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold,color: Colors.white)),
+            automaticallyImplyLeading: false,
         backgroundColor: Colors.indigo,
-          centerTitle: true,
+        centerTitle: true,
         actions: [
           Padding(
             padding: const EdgeInsets.only(right: 10.0),
             child: CircleAvatar(
               radius: 22,
-              backgroundImage: _profilePicUrl.isNotEmpty ? NetworkImage(_profilePicUrl) : null,
+              backgroundImage: _profilePicUrl.isNotEmpty
+                  ? NetworkImage(_profilePicUrl)
+                  : null,
               backgroundColor: Colors.grey.shade400,
               child: _profilePicUrl.isEmpty
                   ? const Icon(Icons.person, size: 28, color: Colors.white)
@@ -85,7 +115,6 @@ class _HomePageState extends State<HomePage> {
           ),
         ],
       ),
-
       body: Padding(
         padding: const EdgeInsets.all(20.0),
         child: GridView.count(
@@ -95,31 +124,32 @@ class _HomePageState extends State<HomePage> {
           crossAxisSpacing: 20,
           mainAxisSpacing: 20,
           children: [
-            _buildNavItem(Icons.category_outlined, 'Category', const CategoryPage()),
-            _buildNavItem(Icons.add_shopping_cart, 'Products', const ProductsPage()),
-            _buildNavItem(Icons.inventory_2_outlined, 'Stock', StockAllocationPage()),
+            _buildNavItem(
+                Icons.category_outlined, 'Category', const CategoryPage()),
+            _buildNavItem(
+                Icons.add_shopping_cart, 'Products', const ProductsPage()),
+            _buildNavItem(
+                Icons.inventory_2_outlined, 'Stock', StockAllocationPage()),
             _buildNavItem(Icons.warehouse, 'Add Stock', AddStockPage()),
-            _buildNavItem(Icons.receipt_long_outlined, 'Order to Van', OrderToVanPage()),
-            _buildNavItem(Icons.person_outline, 'Salesman', const SalesmanPage()),
-            _buildNavItem(Icons.route_outlined,'Van and Route', const CustomerPage()),
-            _buildNavItem(Icons.local_shipping_outlined, 'Van', const VanPage()),
-            _buildNavItem(Icons.local_taxi_outlined, 'Supplier', const SupplierPage()),
+            _buildNavItem(
+                Icons.receipt_long_outlined, 'Order to Van', OrderToVanPage()),
+            _buildNavItem(
+                Icons.person_outline, 'Salesman', const SalesmanPage()),
+            _buildNavItem(
+                Icons.route_outlined, 'Van and Route', const CustomerPage()),
+            _buildNavItem(
+                Icons.local_shipping_outlined, 'Van', const VanPage()),
+            _buildNavItem(
+                Icons.local_taxi_outlined, 'Supplier', const SupplierPage()),
             _buildNavItem(Icons.map_outlined, 'Routes', const RoutesPage()),
+          _buildNavItem(Icons.inventory_2, 'Stock Summary', const StockSummaryPage()),
+
           ],
         ),
-      ),
-
-      bottomNavigationBar: BottomNavigationBar(
-        currentIndex: 0,
-        selectedItemColor: Colors.indigo,
-        unselectedItemColor: Colors.grey,
-        backgroundColor: Colors.white,
-        elevation: 10,
-        type: BottomNavigationBarType.fixed,
-        items: const [
-          BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
-          BottomNavigationBarItem(icon: Icon(Icons.person), label: 'My Account'),
-        ],
+      ),// Use the Custom Bottom Navigation Bar
+      bottomNavigationBar: CustomBottomNav(
+        selectedIndex: _selectedIndex,
+        onItemTapped: _onItemTapped,
       ),
     );
   }
@@ -127,7 +157,8 @@ class _HomePageState extends State<HomePage> {
   Widget _buildNavItem(IconData icon, String label, Widget targetPage) {
     return InkWell(
       onTap: () {
-        Navigator.push(context, MaterialPageRoute(builder: (context) => targetPage));
+        Navigator.push(
+            context, MaterialPageRoute(builder: (context) => targetPage));
       },
       child: Container(
         decoration: BoxDecoration(
@@ -140,33 +171,12 @@ class _HomePageState extends State<HomePage> {
           children: [
             Icon(icon, color: Colors.indigo, size: 30),
             const SizedBox(height: 8),
-            Text(label, style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w500)),
+            Text(label,
+                style:
+                    const TextStyle(fontSize: 12, fontWeight: FontWeight.w500)),
           ],
         ),
       ),
     );
   }
 }
-// Animated Gradient Background Widget
-// class AnimatedBackground extends StatefulWidget {
-//   @override
-//   _AnimatedBackgroundState createState() => _AnimatedBackgroundState();
-// }
-
-// class _AnimatedBackgroundState extends State<AnimatedBackground> {
-//   @override
-//   Widget build(BuildContext context) {
-//     return AnimatedContainer(
-//       duration: const Duration(seconds: 10),
-//       decoration: BoxDecoration(
-//         gradient: LinearGradient(
-//           begin: Alignment.topLeft,
-//           end: Alignment.bottomRight,
-//           colors: [Colors.purple.shade600, Colors.blue.shade600, Colors.green.shade600],
-//           stops: [0.0, 0.5, 1.0],
-//         ),
-//       ),
-//       child: Container(),
-//     );
- // }
-//}

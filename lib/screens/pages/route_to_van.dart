@@ -15,7 +15,7 @@ class _RouteToVanPageState extends State<RouteToVanPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text("Assign Route to Van")),
+      appBar: AppBar(title: const Text("Assign Route to Van",style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold,color: Colors.white))),
       body: Padding(
         padding: const EdgeInsets.all(15.0),
         child: Column(

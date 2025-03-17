@@ -55,7 +55,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Forgot Password'),
+        title: const Text('Forgot Password',style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold,color: Colors.white)),
          backgroundColor: Colors.indigo,
       ),
       body: Padding(

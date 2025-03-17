@@ -5,12 +5,12 @@ import 'package:image_picker/image_picker.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:stock_hub/screens/homepage.dart';
-import 'package:stock_hub/screens/pages/category.dart';
-import 'package:stock_hub/screens/pages/routes.dart';
+import 'package:stock_hub/screens/pages/stock_summary.dart';
 import 'package:stock_hub/screens/pages/van.dart';
-import 'package:stock_hub/screens/pages/supplier.dart';
-import 'package:stock_hub/screens/pages/salesman.dart';
-import 'package:stock_hub/screens/login_page.dart';
+import 'package:stock_hub/screens/pages/common_widgets.dart';
+import 'package:stock_hub/screens/pages/customer.dart';
+import 'package:stock_hub/screens/myaccount.dart';
+
 
 final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
@@ -31,7 +31,7 @@ class Products {
   String title;
   String icon;
   String suppliername;
-  String? _selectedCategory;
+  String? selectedCategory;
   String? selectedSupplier;
 
   Products(
@@ -62,10 +62,12 @@ class ProductsPage extends StatefulWidget {
 
 class _ProductsPageState extends State<ProductsPage> {
   final ImagePicker _picker = ImagePicker();
-  final TextEditingController _searchController = TextEditingController();
+  final TextEditingController searchController = TextEditingController();
   final List<String> uomOptions = ['Kg', 'Liters', 'Meters', 'Pieces'];
   List<Products> filteredProducts = [];
   List<Products> products = [];
+  String searchQuery = '';
+  int _selectedIndex = 0;
   List<String> locationOptions = [
     'Warehouse',
     'Store',
@@ -80,16 +82,53 @@ class _ProductsPageState extends State<ProductsPage> {
   void initState() {
     super.initState();
     _fetchProducts();
-    _searchController
+    searchController
         .addListener(_filterProducts); // Filter instead of refetching
   }
 
   @override
   void dispose() {
-    _searchController.dispose();
+    searchController.dispose();
     super.dispose();
   }
+void _onItemTapped(int index) {
+    setState(() {
+      _selectedIndex = index;
+    });
 
+    switch (_selectedIndex) {
+      case 0:
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => const HomePage()),
+        );
+        break;
+        case 1:
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => const CustomerPage ()),
+        );
+        break;
+         case 2:
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => const VanPage ()),
+        );
+        break;
+         case 3:
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) =>  StockSummaryPage()),
+        );
+        break;
+      case 4:
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => const MyAccountPage()),
+        );
+        break;
+    }
+  }
   Future<void> _fetchProducts() async {
     try {
       QuerySnapshot snapshot = await _firestore.collection('product').get();
@@ -143,7 +182,7 @@ class _ProductsPageState extends State<ProductsPage> {
   }
 
   void _filterProducts() async {
-    String query = _searchController.text.toLowerCase().trim();
+    String query = searchController.text.toLowerCase().trim();
 
     if (query.isEmpty) {
       await _fetchProducts();
@@ -225,6 +264,7 @@ class _ProductsPageState extends State<ProductsPage> {
     final _uomController = TextEditingController(
         text: product?.uom ?? ''); // Unit of Measure (UOM)
     final _iconController = TextEditingController(text: product?.icon ?? '');
+    
     final ImagePicker _picker = ImagePicker();
     String? _pickedIcon;
     String? _selectedCategory = product?.category;
@@ -1046,83 +1086,19 @@ class _ProductsPageState extends State<ProductsPage> {
   }
 
   @override
-  Widget build(BuildContext context) {
+   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Product Page', style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
-        backgroundColor: Colors.indigo,
-        iconTheme: const IconThemeData(color: Colors.black),
-        centerTitle: true,
-      ),
-
-      // Drawer for Navigation
-      endDrawer: Drawer(
-        child: ListView(
-          padding: EdgeInsets.zero,
-          children: [
-            Container(
-        height: 120, // Reduced height
-        color: Colors.indigo,
-      ),
-            
-            _buildDrawerItem(Icons.home_outlined, 'Home', const HomePage()),
-            _buildDrawerItem(
-                Icons.storage_rounded, 'Categories', const CategoryPage()),
-            _buildDrawerItem(Icons.business, 'Suppliers', const SupplierPage()),
-            _buildDrawerItem(
-                Icons.local_shipping_outlined, 'Van', const VanPage()),
-            _buildDrawerItem(Icons.room_outlined, 'Routes', const RoutesPage()),
-            _buildDrawerItem(
-                Icons.person_3_outlined, 'Sales Man', const SalesmanPage()),
-            _buildDrawerItem(Icons.exit_to_app, 'Logout', const LoginPage()),
-          ],
-        ),
-      ),
-
-      // Body Content
+      appBar: buildAppBar('Product Page'),
+      endDrawer: buildEndDrawer(context),
       body: Column(
         children: [
-          // Search Bar Outside AppBar
-          Padding(
-            padding: const EdgeInsets.all(12.0),
-            child: TextField(
-              controller: _searchController,
-              style: const TextStyle(color: Colors.black),
-              decoration: InputDecoration(
-                hintText: "Search Products...",
-                hintStyle: const TextStyle(color: Colors.black54),
-                prefixIcon: const Icon(Icons.search, color: Colors.black),
-                suffixIcon: _searchController.text.isNotEmpty
-                    ? IconButton(
-                        icon: const Icon(Icons.clear, color: Colors.black),
-                        onPressed: () {
-                          _searchController.clear();
-                          _filterProducts();
-                        },
-                      )
-                    : null,
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(12),
-                  borderSide: const BorderSide(color: Colors.black),
-                ),
-                enabledBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(12),
-                  borderSide: const BorderSide(color: Colors.black),
-                ),
-                focusedBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(12),
-                  borderSide: const BorderSide(color: Colors.black, width: 2),
-                ),
-              ),
-              onTap: () {
-                if (products.isEmpty) {
-                  _fetchProducts();
-                }
-              },
-              onChanged: (value) {
-                _filterProducts();
-              },
-            ),
+          CustomSearchBar(
+            controller: searchController,
+            onSearch: (query) {
+              setState(() {
+                searchQuery = query;
+              });
+            },
           ),
 
           // Product List
@@ -1233,14 +1209,16 @@ class _ProductsPageState extends State<ProductsPage> {
         ],
       ),
 
-      // Floating Action Button (FAB) for Adding Products
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          _showProductsForm(context);
-        },
-        backgroundColor: Colors.indigo,
-        child: const Icon(Icons.add, color: Colors.white), // "+" Icon
+      // Use the Custom Bottom Navigation Bar
+      bottomNavigationBar: CustomBottomNav(
+        selectedIndex: _selectedIndex,
+        onItemTapped: _onItemTapped,
       ),
+    
+      // Floating Action Button (FAB) for Adding Categories
+      floatingActionButton: buildFloatingButton(() {
+        _showProductsForm(context);
+      }),
     );
   }
 

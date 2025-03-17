@@ -60,9 +60,10 @@ class _VanPageState extends State<VanPage> {
       appBar: AppBar(
           title: const Text(
             'Van Management',
-            style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+            style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold,color: Colors.white)
           ),
           backgroundColor: Colors.indigo,
+          iconTheme: const IconThemeData(color: Colors.white),
           centerTitle: true),
       body: StreamBuilder<QuerySnapshot>(
         stream: vansCollection.snapshots(),

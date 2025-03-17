@@ -61,10 +61,10 @@ class _SupplierPageState extends State<SupplierPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Suppliers',style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),),
+        title: const Text('Suppliers',style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold,color: Colors.white)),
         centerTitle: true,
           backgroundColor: Colors.indigo,
-        iconTheme: const IconThemeData(color: Colors.black),
+       iconTheme: const IconThemeData(color: Colors.white),
         elevation: 2,
         foregroundColor: const Color.fromARGB(255, 10, 10, 10),
       ),

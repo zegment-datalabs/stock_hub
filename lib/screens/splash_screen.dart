@@ -38,7 +38,7 @@ class _SplashScreenState extends State<SplashScreen>
 
     _loadUser();
 
-  //   // Navigate to Sign Up Page after 3 seconds
+  // //   // Navigate to Sign Up Page after 3 seconds
   //   Timer(const Duration(seconds: 3), () {
   //     Navigator.pushReplacement(
   //       context,
@@ -47,7 +47,7 @@ class _SplashScreenState extends State<SplashScreen>
   //   });
   // }
 
-   // Navigate to Sign Up Page after 3 seconds
+   //Navigate to Sign Up Page after 3 seconds
     Timer(const Duration(seconds: 3), () {
       Navigator.pushReplacement(
         context,

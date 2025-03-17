@@ -4,13 +4,13 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:stock_hub/screens/pages/common_widgets.dart';
+import 'package:stock_hub/screens/myaccount.dart'; 
 import 'package:stock_hub/screens/homepage.dart';
-import 'package:stock_hub/screens/pages/products.dart';
-import 'package:stock_hub/screens/pages/routes.dart';
+import 'package:stock_hub/screens/pages/customer.dart';
+import 'package:stock_hub/screens/pages/stock_summary.dart';
 import 'package:stock_hub/screens/pages/van.dart';
-import 'package:stock_hub/screens/pages/supplier.dart';
-import 'package:stock_hub/screens/pages/salesman.dart';
-import 'package:stock_hub/screens/login_page.dart';
+
 
 final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
@@ -38,23 +38,62 @@ class _CategoryPageState extends State<CategoryPage> {
   List<Category> categories = [];
   final ImagePicker _picker = ImagePicker();
   List<Category> filteredCategories = [];
-  final TextEditingController _searchController = TextEditingController();
+  final TextEditingController searchController = TextEditingController();
   bool isDeleteMode = false; // Add this flag
-  String? selectedButton; // Declare the selected button state variable
+  String? selectedButton;
+  String searchQuery = ''; // Declare the selected button state variable
+   int _selectedIndex = 0;
 
   @override
   void initState() {
     super.initState();
     _fetchCategories();
-    _searchController.addListener(_filterCategories);
+    searchController.addListener(_filterCategories);
   }
 
   @override
   void dispose() {
-    _searchController.dispose();
+    searchController.dispose();
     super.dispose();
   }
+void _onItemTapped(int index) {
+    setState(() {
+      _selectedIndex = index;
+    });
 
+    switch (_selectedIndex) {
+      case 0:
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => const HomePage()),
+        );
+        break;
+        case 1:
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => const CustomerPage ()),
+        );
+        break;
+         case 2:
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => const VanPage ()),
+        );
+        break;
+         case 3:
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) =>  StockSummaryPage()),
+        );
+        break;
+      case 4:
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => const MyAccountPage()),
+        );
+        break;
+    }
+  }
   Future<void> _fetchCategories() async {
     try {
       QuerySnapshot snapshot = await _firestore.collection('category').get();
@@ -86,7 +125,7 @@ class _CategoryPageState extends State<CategoryPage> {
   }
 
   void _filterCategories() async {
-    String query = _searchController.text.toLowerCase().trim();
+    String query = searchController.text.toLowerCase().trim();
 
     if (query.isEmpty) {
       await _fetchCategories();
@@ -251,7 +290,7 @@ class _CategoryPageState extends State<CategoryPage> {
                 topLeft: Radius.circular(24.0),
                 topRight: Radius.circular(24.0),
                 // bottomLeft: Radius.circular(24.0),
-               // bottomRight: Radius.circular(24.0),
+                // bottomRight: Radius.circular(24.0),
               ),
               child: BackdropFilter(
                 filter: ImageFilter.blur(sigmaX: 5.0, sigmaY: 5.0),
@@ -268,7 +307,8 @@ class _CategoryPageState extends State<CategoryPage> {
                                 .headlineMedium
                                 ?.copyWith(
                                     color: const Color.fromARGB(255, 2, 3, 7),
-                                    fontWeight: FontWeight.bold,fontSize: 22)),
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 22)),
                         const SizedBox(height: 14),
                         TextField(
                           controller: _titleController,
@@ -307,37 +347,44 @@ class _CategoryPageState extends State<CategoryPage> {
                         ),
                         const SizedBox(height: 14),
                         Row(
-  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-  children: [
-                    // Gallery Button with Icon
-                  ElevatedButton(
-                      onPressed: _pickImage,
-                      style: ElevatedButton.styleFrom(
-                        elevation: 0,
-                        foregroundColor:  Colors.indigo, // Color when pressed
-                        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                      ),
-                      child: const Icon(Icons.photo_library,size:30, color: Color.fromARGB(255, 65, 52, 52)),
-                    ),
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            // Gallery Button with Icon
+                            ElevatedButton(
+                              onPressed: _pickImage,
+                              style: ElevatedButton.styleFrom(
+                                elevation: 0,
+                                foregroundColor:
+                                    Colors.indigo, // Color when pressed
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 20, vertical: 12),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(8),
+                                ),
+                              ),
+                              child: const Icon(Icons.photo_library,
+                                  size: 30,
+                                  color: Color.fromARGB(255, 65, 52, 52)),
+                            ),
 
-                    ElevatedButton(
-                      onPressed: _takePicture,
-                      style: ElevatedButton.styleFrom(
-                      elevation: 0,
-                        foregroundColor: Colors.indigo, // Color when pressed
-                        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(8),
+                            ElevatedButton(
+                              onPressed: _takePicture,
+                              style: ElevatedButton.styleFrom(
+                                elevation: 0,
+                                foregroundColor:
+                                    Colors.indigo, // Color when pressed
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 20, vertical: 12),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(8),
+                                ),
+                              ),
+                              child: const Icon(Icons.camera_alt,
+                                  size: 30,
+                                  color: Color.fromARGB(255, 65, 52, 52)),
+                            ),
+                          ],
                         ),
-                      ),
-                      child: const Icon(Icons.camera_alt,size:30,  color: Color.fromARGB(255, 65, 52, 52)),
-                    ),
-                  ],
-                ),
-
                         const SizedBox(height: 14),
                         if (_pickedIcon != null)
                           Padding(
@@ -361,7 +408,9 @@ class _CategoryPageState extends State<CategoryPage> {
                                 Navigator.pop(context);
                               },
                               child: const Text('Cancel',
-                               style: TextStyle(fontSize: 16, color: Color.fromARGB(255, 201, 35, 35))),
+                                  style: TextStyle(
+                                      fontSize: 16,
+                                      color: Color.fromARGB(255, 201, 35, 35))),
                             ),
                             ElevatedButton(
                               onPressed: () {
@@ -392,12 +441,11 @@ class _CategoryPageState extends State<CategoryPage> {
                               },
                               child: Text(isEditing ? 'Update' : 'Add'),
                               style: ElevatedButton.styleFrom(
-                               elevation: 0,
-                                padding: const EdgeInsets.symmetric(
-                                    horizontal: 24, vertical: 12),
-                                shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.zero)
-                              ),
+                                  elevation: 0,
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 24, vertical: 12),
+                                  shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.zero)),
                             ),
                           ],
                         ),
@@ -608,81 +656,17 @@ class _CategoryPageState extends State<CategoryPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Category Page', style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),),
-        backgroundColor: Colors.indigo,
-        iconTheme: const IconThemeData(color: Colors.black),
-          centerTitle: true,
-      ),
-
-      // Drawer for Navigation
-      endDrawer: Drawer(
-        child: ListView(
-          padding: EdgeInsets.zero,
-          children: [
-           // Reduced Height Drawer Header
-      Container(
-        height: 120, // Reduced height
-        color: Colors.indigo,
-      ),
-            _buildDrawerItem(Icons.home_outlined, 'Home', const HomePage()),
-            _buildDrawerItem(
-                Icons.storage_rounded, 'Products', const ProductsPage()),
-            _buildDrawerItem(Icons.business, 'Suppliers', const SupplierPage()),
-            _buildDrawerItem(
-                Icons.local_shipping_outlined, 'Van', const VanPage()),
-            _buildDrawerItem(Icons.room_outlined, 'Routes', const RoutesPage()),
-            _buildDrawerItem(
-                Icons.person_3_outlined, 'Sales Man', const SalesmanPage()),
-            _buildDrawerItem(Icons.exit_to_app, 'Logout', const LoginPage()),
-          ],
-        ),
-      ),
-
-      // Body Content
+      appBar: buildAppBar('Category Page'),
+      endDrawer: buildEndDrawer(context),
       body: Column(
         children: [
-          // Search Bar Outside AppBar
-          Padding(
-            padding: const EdgeInsets.all(12.0),
-            child: TextField(
-              controller: _searchController,
-              style: const TextStyle(color: Colors.black),
-              decoration: InputDecoration(
-                hintText: "Search categories...",
-                hintStyle: const TextStyle(color: Colors.black54),
-                prefixIcon: const Icon(Icons.search, color: Colors.black),
-                suffixIcon: _searchController.text.isNotEmpty
-                    ? IconButton(
-                        icon: const Icon(Icons.clear, color: Colors.black),
-                        onPressed: () {
-                          _searchController.clear();
-                          _filterCategories();
-                        },
-                      )
-                    : null,
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(12),
-                  borderSide: const BorderSide(color: Colors.black),
-                ),
-                enabledBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(12),
-                  borderSide: const BorderSide(color: Colors.black),
-                ),
-                focusedBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(12),
-                  borderSide: const BorderSide(color: Colors.black, width: 2),
-                ),
-              ),
-              onTap: () {
-                if (categories.isEmpty) {
-                  _fetchCategories();
-                }
-              },
-              onChanged: (value) {
-                _filterCategories();
-              },
-            ),
+          CustomSearchBar(
+            controller: searchController,
+            onSearch: (query) {
+              setState(() {
+                searchQuery = query;
+              });
+            },
           ),
 
           // Category List
@@ -768,7 +752,7 @@ class _CategoryPageState extends State<CategoryPage> {
                                 ),
                                 IconButton(
                                   icon: const Icon(Icons.delete,
-                                      color:Color.fromARGB(255, 153, 29, 20)),
+                                      color: Color.fromARGB(255, 153, 29, 20)),
                                   onPressed: () {
                                     _showDeleteConfirmationDialog(
                                         category, index);
@@ -792,17 +776,19 @@ class _CategoryPageState extends State<CategoryPage> {
           ),
         ],
       ),
-
-      // Floating Action Button (FAB) for Adding Categories
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          _showCategoryForm(context);
-        },
-        backgroundColor: Colors.indigo,
-        child: const Icon(Icons.add, color: Colors.white), // "+" Icon
+// Use the Custom Bottom Navigation Bar
+      bottomNavigationBar: CustomBottomNav(
+        selectedIndex: _selectedIndex,
+        onItemTapped: _onItemTapped,
       ),
+    
+      // Floating Action Button (FAB) for Adding Categories
+      floatingActionButton: buildFloatingButton(() {
+        _showCategoryForm(context);
+      }),
     );
   }
+  
 
 // Drawer Item Builder
   Widget _buildDrawerItem(IconData icon, String title, Widget targetPage) {
@@ -817,4 +803,5 @@ class _CategoryPageState extends State<CategoryPage> {
       },
     );
   }
+  
 }

@@ -16,7 +16,7 @@ class _SalesmanToVanPageState extends State<SalesmanToVanPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text("Salesman to Van Assignment")),
+      appBar: AppBar(title: const Text("Salesman to Van Assignment",style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold,color: Colors.white))),
       body: Padding(
         padding: const EdgeInsets.all(10.0),
         child: Column(

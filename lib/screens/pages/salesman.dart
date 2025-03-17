@@ -170,8 +170,8 @@ class _SalesmanPageState extends State<SalesmanPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar:
-          AppBar(title: const Text('Salesmen',style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),), 
-          backgroundColor: Colors.indigo,centerTitle: true),
+          AppBar(title: const Text('Salesmen',style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold,color: Colors.white),), 
+          backgroundColor: Colors.indigo, iconTheme: const IconThemeData(color: Colors.white),centerTitle: true),
       body: StreamBuilder<QuerySnapshot>(
         stream: salesmen.snapshots(),
         builder: (context, snapshot) {

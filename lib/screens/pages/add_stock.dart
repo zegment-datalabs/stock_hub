@@ -100,8 +100,9 @@ class _AddStockPageState extends State<AddStockPage>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text("Add Stock ",style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
-      backgroundColor: Colors.indigo,
+      appBar: AppBar(title: const Text("Add Stock ",style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold,color: Colors.white)),
+        backgroundColor: Colors.indigo,
+       iconTheme: const IconThemeData(color: Colors.white),
         centerTitle: true,
       ),
       body: Column(
@@ -162,35 +163,33 @@ class _AddStockPageState extends State<AddStockPage>
                       if (selectedCategory != null)
                         // Search Bar
                         Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: TextField(
-                            controller: searchController,
-                            style: const TextStyle(color: Colors.black),
-                            decoration: InputDecoration(
-                              hintText: "Search products...",
-                             hintStyle: const TextStyle(color: Colors.black54),
-                              prefixIcon: Icon(Icons.search),
-                              suffixIcon: searchController.text.isNotEmpty
-                                  ? IconButton(
-                                      icon: Icon(Icons.clear),
-                                      onPressed: () {
-                                        setState(() {
-                                          searchController.clear();
-                                          searchQuery = "";
-                                        });
-                                      },
-                                    )
-                                  : null,
-                              border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(8)),
-                            ),
-                            onChanged: (value) {
-                              setState(() {
-                                searchQuery = value.toLowerCase();
-                              });
-                            },
-                          ),
-                        ),
+                    padding: const EdgeInsets.all(12.0),
+                    child: TextField(
+                      controller: searchController,
+                      decoration: InputDecoration(
+                        hintText: "Search products...",
+                        prefixIcon: Icon(Icons.search),
+                        suffixIcon: searchController.text.isNotEmpty
+                            ? IconButton(
+                                icon: Icon(Icons.clear),
+                                onPressed: () {
+                                  setState(() {
+                                    searchController.clear();
+                                    searchQuery = "";
+                                              });
+                                            },
+                                          )
+                                        : null,
+                                        contentPadding: const EdgeInsets.symmetric(vertical: 5.0, horizontal: 12.0), // Reduced height
+                                    border: OutlineInputBorder(borderRadius: BorderRadius.circular(30)),
+                                  ),
+                                  onChanged: (value) {
+                                    setState(() {
+                                      searchQuery = value.toLowerCase();
+                                    });
+                                  },
+                                ),
+                              ),
 
                       // Product List
                      Expanded(

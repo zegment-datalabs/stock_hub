@@ -155,7 +155,7 @@ class _LoginPageState extends State<LoginPage> {
       appBar: AppBar(
          backgroundColor: Colors.indigo,
         elevation: 0,
-        title: const Text('Login'),
+        title: const Text('Login',style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold,color: Colors.white)),
         automaticallyImplyLeading: false, // Removes the back arrow
       ),
       body: Padding(
